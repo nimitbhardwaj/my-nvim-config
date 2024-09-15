@@ -1,7 +1,13 @@
 return {
-    "ojroques/nvim-hardline",
+    "nvim-lualine/lualine.nvim",
     name="statusline",
     config=function()
-        require("hardline").setup()
+        require("lualine").setup({
+            options={
+                theme="dracula",
+                disabled_filetypes={"NvimTree"}
+
+            }
+        })
     end
 }
