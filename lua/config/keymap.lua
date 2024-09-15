@@ -12,6 +12,3 @@ keymap('n', '<C-K>', '<C-W>k', { noremap = true, silent = true })
 keymap('n', '<C-L>', '<C-W>l', { noremap = true, silent = true })
 
 
--- LSP
-keymap('n', 'K', 'vim.lsp.buf.hover', {})
-keymap('n', 'K', 'vim.lsp.buf.definition', {})
