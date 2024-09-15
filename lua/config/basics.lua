@@ -8,5 +8,8 @@ vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set encoding=UTF-8")
 vim.cmd("set cursorline")
+
+vim.cmd("set termguicolors")
+
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
