@@ -11,4 +11,5 @@ keymap('n', '<C-J>', '<C-W>j', { noremap = true, silent = true })
 keymap('n', '<C-K>', '<C-W>k', { noremap = true, silent = true })
 keymap('n', '<C-L>', '<C-W>l', { noremap = true, silent = true })
 
+keymap('n', '<leader>bd', ':Bdelete<CR>', {noremap=true, silent=true})
 
