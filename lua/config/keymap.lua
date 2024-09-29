@@ -29,6 +29,9 @@ end, opts)
 keymap('n', '<leader>bd', ':Bdelete<CR>', opts)
 keymap('n', '<leader>bw', ':Bwipeout<CR>', opts)
 
+-- LSP Config Settings
+keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
 -- Telescope keybindings
 keymap('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files', noremap = true, silent = true })
 keymap('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep', noremap = true, silent = true })
