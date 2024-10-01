@@ -15,15 +15,8 @@ keymap('n', '<C-K>', '<C-W>k', opts)
 keymap('n', '<C-L>', '<C-W>l', opts)
 
 -- LuaSnip keybindings
-keymap({"i"}, "<C-K>", function() ls.expand() end, opts)
 keymap({"i", "s"}, "<C-L>", function() ls.jump(1) end, opts)
 keymap({"i", "s"}, "<C-H>", function() ls.jump(-1) end, opts)
-
-keymap({"i", "s"}, "<C-E>", function()
-    if ls.choice_active() then
-        ls.change_choice(1)
-    end
-end, opts)
 
 -- Buffer Delete Key Binds
 keymap('n', '<leader>bd', ':Bdelete<CR>', opts)

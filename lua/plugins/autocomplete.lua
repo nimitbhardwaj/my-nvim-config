@@ -15,6 +15,7 @@ return {
       local lsp_cfg = {name='nvim_lsp'}
       local buffer_cfg = {name='buffer'}
       local luasnip_cfg = {name="luasnip"}
+      local dadbod_cfg = {name="vim-dadbod-completion"}
 
       cmp.setup({
         snippet = {
@@ -38,7 +39,8 @@ return {
         sources = cmp.config.sources({
             lsp_cfg,
             buffer_cfg,
-            luasnip_cfg
+            luasnip_cfg,
+            dadbod_cfg,
         })
       })
     end
