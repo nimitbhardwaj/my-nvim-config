@@ -4,7 +4,6 @@ return {
         "rafamadriz/friendly-snippets",
     },
     version="v2.*",
-    event="VeryLazy",
     run="make install_jsregexp",
     config=function()
         require('luasnip').setup({})
