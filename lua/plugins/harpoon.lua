@@ -1,7 +1,37 @@
+function RemoveEntityFromTelescope(item)
+  local opts = { noremap = true, silent = true }
+  local harpoon = require("harpoon")
+  local list = harpoon:list()
+  item = item or list.config.create_list_item(list.config)
+  local Extensions = require("harpoon.extensions")
+  local Logger = require("harpoon.logger")
+
+  local items = list.items
+  if item ~= nil then
+    for i = 1, list._length do
+      local v = items[i]
+      if list.config.equals(v, item) then
+        table.remove(items, i)
+        list._length = list._length - 1
+
+        Logger:log("HarpoonList:remove", { item = item, index = i })
+
+        Extensions.extensions:emit(
+          Extensions.event_names.REMOVE,
+          { list = list, item = item, idx = i }
+        )
+        break
+      end
+    end
+  end
+end
+
 return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
   config = function()
     require("harpoon"):setup()
   end,
@@ -60,7 +90,7 @@ return {
               local selected_entry = state.get_selected_entry()
               local current_picker = state.get_current_picker(prompt_buffer_number)
 
-              harpoon:list():remove(selected_entry)
+              RemoveEntityFromTelescope(selected_entry)
               current_picker:refresh(make_finder())
             end)
 
