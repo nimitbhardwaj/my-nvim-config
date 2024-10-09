@@ -18,7 +18,8 @@ return {
         config=function()
             require("mason-tool-installer").setup({
                 ensure_installed={
-                    "flake8"
+                    "flake8",
+                    "black"
                 }
             })
         end
