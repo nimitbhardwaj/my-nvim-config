@@ -1,37 +1,35 @@
 return {
     {
         "williamboman/mason.nvim",
-        config=function()
+        config = function()
             require("mason").setup({})
         end
     },
     {
         "williamboman/mason-lspconfig.nvim",
-        config=function()
+        config = function()
             require("mason-lspconfig").setup({
-                ensure_installed={"lua_ls", "pyright", "clangd"}
+                ensure_installed = { "lua_ls", "pyright", "clangd" }
             })
         end
     },
     {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        config=function()
+        config = function()
             require("mason-tool-installer").setup({
-                ensure_installed={
-                    "flake8",
-                    "black"
+                ensure_installed = {
+                    "ruff"
                 }
             })
         end
     },
     {
         "neovim/nvim-lspconfig",
-        config=function()
+        config = function()
             local lspconfig = require("lspconfig")
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
             lspconfig.clangd.setup({})
         end
     },
-
 }
