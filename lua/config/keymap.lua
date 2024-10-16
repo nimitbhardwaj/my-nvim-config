@@ -32,7 +32,6 @@ keymap('n', 'gd', function() vim.lsp.buf.definition() end, opts)
 
 -- Code action
 keymap('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
-keymap('x', '<leader>ca', function() vim.lsp.buf.range_code_action() end, opts)
 
 
 -- Telescope keybindings
