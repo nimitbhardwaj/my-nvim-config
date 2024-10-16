@@ -15,19 +15,28 @@ keymap('n', '<C-K>', '<C-W>k', opts)
 keymap('n', '<C-L>', '<C-W>l', opts)
 
 -- LuaSnip keybindings
-keymap({"i", "s"}, "<C-L>", function() ls.jump(1) end, opts)
-keymap({"i", "s"}, "<C-H>", function() ls.jump(-1) end, opts)
+keymap({ "i", "s" }, "<C-L>", function() ls.jump(1) end, opts)
+keymap({ "i", "s" }, "<C-H>", function() ls.jump(-1) end, opts)
 
 -- Buffer Delete Key Binds
 keymap('n', '<leader>bd', ':Bdelete<CR>', opts)
 keymap('n', '<leader>bw', ':Bwipeout<CR>', opts)
 
 -- LSP Config Settings
-keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+-- Hover
+keymap('n', 'K', function() vim.lsp.buf.hover() end, opts)
+
+-- Go to definition
+keymap('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+
+-- Code action
+keymap('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
+keymap('x', '<leader>ca', function() vim.lsp.buf.range_code_action() end, opts)
+
 
 -- Telescope keybindings
 keymap('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files', noremap = true, silent = true })
 keymap('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep', noremap = true, silent = true })
 keymap('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers', noremap = true, silent = true })
 keymap('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags', noremap = true, silent = true })
-
