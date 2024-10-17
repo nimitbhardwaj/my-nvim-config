@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "pyright", "clangd" }
+                ensure_installed = { "lua_ls", "pyright", "clangd", "ts_ls", "tailwindcss", "eslint" }
             })
         end
     },
@@ -18,7 +18,8 @@ return {
         config = function()
             require("mason-tool-installer").setup({
                 ensure_installed = {
-                    "ruff"
+                    "ruff",
+                    "prettierd",
                 }
             })
         end
@@ -26,10 +27,14 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
-            local lspconfig = require("lspconfig")
-            lspconfig.lua_ls.setup({})
-            lspconfig.pyright.setup({})
-            lspconfig.clangd.setup({})
+            local lspconfig = require("lspconfig");
+            local lsp_configuration = {};
+            lspconfig.lua_ls.setup(lsp_configuration)
+            lspconfig.pyright.setup(lsp_configuration)
+            lspconfig.clangd.setup(lsp_configuration)
+            lspconfig.ts_ls.setup(lsp_configuration)
+            lspconfig.tailwindcss.setup(lsp_configuration)
+            lspconfig.eslint.setup(lsp_configuration)
         end
     },
 }
