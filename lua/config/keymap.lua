@@ -29,6 +29,8 @@ keymap('n', 'K', function() vim.lsp.buf.hover() end, opts)
 
 -- Go to definition
 keymap('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+keymap('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
+keymap('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
 
 -- Code action
 keymap('n', '<leader>ca', function() vim.lsp.buf.code_action() end, opts)
