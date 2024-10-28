@@ -35,7 +35,7 @@ return {
             lspconfig.ts_ls.setup(lsp_configuration)
             lspconfig.tailwindcss.setup(lsp_configuration)
             lspconfig.eslint.setup(lsp_configuration)
-            lspconfig.java_language_server.setup(lsp_configuration)
+            lspconfig.jdtls.setup(lsp_configuration)
         end
     },
 }
