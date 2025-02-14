@@ -41,3 +41,17 @@ keymap('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files', n
 keymap('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep', noremap = true, silent = true })
 keymap('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers', noremap = true, silent = true })
 keymap('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags', noremap = true, silent = true })
+
+-- Spectre keybindings
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+})
