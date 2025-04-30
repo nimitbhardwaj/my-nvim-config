@@ -6,10 +6,12 @@ return {
     },
     config = function()
         require("ai").setup({
-            provider = "ollama",
-            ollama = {
+            provider = "groq",
+            debug = false,
+            groq = {
+                endpoint = "https://api.groq.com",
+                model = "llama-3.3-70b-versatile"
             }
-
         })
     end
 
