@@ -43,7 +43,7 @@ keymap('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers', noremap
 keymap('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags', noremap = true, silent = true })
 
 -- Spectre keybindings
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+vim.keymap.set('n', '<leader><leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
     desc = "Toggle Spectre"
 })
 vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
