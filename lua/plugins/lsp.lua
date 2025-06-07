@@ -29,9 +29,9 @@ return {
         config = function()
             local lspconfig = require("lspconfig");
             local lsp_configuration = {};
-            lspconfig.lua_ls.setup(lsp_configuration)
-            lspconfig.pyright.setup(lsp_configuration)
-            lspconfig.clangd.setup(lsp_configuration)
+            -- lspconfig.lua_ls.setup(lsp_configuration)
+            -- lspconfig.pyright.setup(lsp_configuration)
+            -- lspconfig.clangd.setup(lsp_configuration)
             lspconfig.ts_ls.setup(lsp_configuration)
             lspconfig.tailwindcss.setup(lsp_configuration)
             lspconfig.eslint.setup(lsp_configuration)

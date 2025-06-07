@@ -43,16 +43,16 @@ keymap('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers', noremap
 keymap('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags', noremap = true, silent = true })
 
 -- Spectre keybindings
-vim.keymap.set('n', '<leader><leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+vim.keymap.set('n', '<localleader>S', '<cmd>lua require("spectre").toggle()<CR>', {
     desc = "Toggle Spectre"
 })
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+vim.keymap.set('n', '<localleader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
     desc = "Search current word"
 })
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+vim.keymap.set('v', '<localleader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
     desc = "Search current word"
 })
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+vim.keymap.set('n', '<localleader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
     desc = "Search on current file"
 })
 
