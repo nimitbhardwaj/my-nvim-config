@@ -1,40 +1,4 @@
-# Neovim Config
-This is a repository for my neovim configuration. I use neovim as my primary text editor for programming and writing. I have been using neovim for a few years now and I have been constantly tweaking my configuration to make it more efficient and productive. I have tried to keep my configuration as minimal as possible and only include the plugins that I use on a daily basis. I have also tried to keep my configuration as organized as possible so that it is easy to understand and modify.
+# 💤 LazyVim
 
-## Installation
-To install my neovim configuration, you need to follow these steps:
-* Clone this repository to your local machine:
-```bash
-git clone https://github.com/nimitbhardwaj/my-nvm-config.git ~/.config/nvim
-```
-* After the clone is successful, open just open the NeoVim and Lazy will install the required plugins without any issue.
-
-## Plugins
-To help in the development and other tasks, I have installed the following plugins:
-
-* **nvim-cmp**: The autocomplete plugin that I use for neovim. It provides a lot of features like LSP completions, buffer completions, path completions, command line completions, and snippet completions. I have also installed the LuaSnip plugin for snippet completions. It depends on following plugins to work properly:
-    * **cmp-nvim-lsp**: The LSP source for nvim-cmp. It provides LSP completions for nvim-cmp.
-    * **cmp-buffer**: The buffer source for nvim-cmp. It provides buffer completions for nvim-cmp.
-    * **cmp-path**: The path source for nvim-cmp. It provides path completions for nvim-cmp.
-    * **cmp-cmdline**: The command line source for nvim-cmp. It provides command line completions for nvim-cmp.
-    * **cmp_luasnip**: The LuaSnip source for nvim-cmp. It provides snippet completions for nvim-cmp.
-* **autoclose.nvim**: The plugin that I use to automatically close the brackets, quotes, and other characters in neovim. It provides a lot of features like closing the brackets, quotes, and other characters automatically when you type them. It also provides a lot of customization options to configure the behavior of the plugin.
-* **bufferline.lua**: The plugin that I use to display the bufferline in neovim. It provides a lot of features like displaying the bufferline at the top or bottom of the window, displaying the buffer numbers, displaying the buffer names, displaying the buffer icons, displaying the buffer highlights, and displaying the buffer separators. It also provides a lot of customization options to configure the appearance of the bufferline.
-* **cellular-automaton.nvim**: The plugin that I use to generate cellular automata in neovim. It provides a lot of features like generating the cellular automata, displaying the cellular automata, and updating the cellular automata. It also provides a lot of customization options to configure the behavior of the plugin. Its a fun plugin
-* **dracula.vim**: The plugin that I use to set the dracula theme in neovim. It provides a lot of features like setting the dracula theme, setting the dracula colors, setting the dracula highlights, setting the dracula options, and setting the dracula styles. It also provides a lot of customization options to configure the appearance of the dracula theme.
-* **vim-commentary**: The plugin that I use to comment out the lines in neovim. It provides a lot of features like commenting out the lines, commenting out the blocks, commenting out the paragraphs, commenting out the regions, and commenting out the selections. It also provides a lot of customization options to configure the behavior of the plugin. It is a very useful plugin for commenting out the lines in neovim.
-* **copilot.vim**: The github copilot feature I use in neovim. It provides a lot of features like generating the code, displaying the code, and updating the code. It also provides a lot of customization options to configure the behavior of the plugin. It is a very useful plugin for generating the code in neovim.
-* **vim-dadbod-ui**: The plugin that I use to display the database in neovim. It provides a lot of features like displaying the database, displaying the tables, displaying the columns, displaying the rows, and displaying the results. It also provides a lot of customization options to configure the appearance of the database. It is a very useful plugin for displaying the database in neovim. It depends on following:
-    * **vim-dadbod**: The plugin that I use to interact with the database in neovim. It provides a lot of features like connecting to the database, disconnecting from the database, executing the queries, and displaying the results. It also provides a lot of customization options to configure the behavior of the plugin.
-    * **vim-dadbod-completion**: The plugin that I use to complete the queries in neovim. It provides a lot of features like completing the queries, completing the tables, completing the columns, completing the rows, and completing the results. It also provides a lot of customization options to configure the behavior of the plugin.
-* **gitsigns**: The plugin that I use to display the git signs in neovim. It provides a lot of features like displaying the git signs, displaying the git changes, displaying the git diffs, displaying the git hunks, and displaying the git status. It also provides a lot of customization options to configure the appearance of the git signs.
-* **leap.vim**: The plugin that I use to jump to the lines in neovim. It provides a lot of features like jumping to the lines, jumping to the words, jumping to the characters, jumping to the symbols, and jumping to the tags. It also provides a lot of customization options to configure the behavior of the plugin.
-* **nvim-lspconfig**: The plugin that I use to configure the LSP in neovim. It provides a lot of features like configuring the LSP servers, configuring the LSP clients, configuring the LSP settings, configuring the LSP options, and configuring the LSP styles. It also provides a lot of customization options to configure the behavior of the plugin. It depends on following:
-    * **mason.nvim**: The plugin that I use to configure the mason LSP in neovim. It provides a lot of features like configuring the mason LSP server, configuring the mason LSP client, configuring the mason LSP settings, configuring the mason LSP options, and configuring the mason LSP styles. It also provides a lot of customization options to configure the behavior of the plugin.
-    * **mason-lspconfig**: The plugin that I use to configure the mason LSP in neovim. It provides a lot of features like configuring the mason LSP server, configuring the mason LSP client, configuring the mason LSP settings, configuring the mason LSP options, and configuring the mason LSP styles. It also provides a lot of customization options to configure the behavior of the plugin.
-* **LuaSnip**: The plugin that I use to generate the snippets in neovim. It provides a lot of features like generating the snippets, displaying the snippets, and updating the snippets. It also provides a lot of customization options to configure the behavior of the plugin.
-* **bufdelete.nvim**: The plugin that I use to delete the buffers in neovim. It provides a lot of features like deleting the buffers, deleting the windows, deleting the tabs, deleting the splits, and deleting the layouts. It also provides a lot of customization options to configure the behavior of the plugin.
-* **scope.nvim**: The plugin is used to scope out the buffers in the given tab for easier tab and buffer management.
-* **nvim-tree.lua**: The plugin that I use to display the file tree in neovim. It provides a lot of features like displaying the file tree, displaying the file icons, displaying the file highlights, displaying the file options, and displaying the file styles. It also provides a lot of customization options to configure the appearance of the file tree.
-* **lualine.nvim**: The plugin that I use to display the status line in neovim. It provides a lot of features like displaying the status line, displaying the status icons, displaying the status highlights, displaying the status options, and displaying the status styles. It also provides a lot of customization options to configure the appearance of the status line.
-* **telescope.nvim**: The plugin that I use to search the files in neovim. It provides a lot of features like searching the files, searching the buffers, searching the paths, searching the commands, and searching the lines. It also provides a lot of customization options to configure the behavior of the plugin.
+A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
+Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
