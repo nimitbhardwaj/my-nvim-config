@@ -42,12 +42,6 @@ packages:
       executables:
         - name: cliamp
           severity: error
-  hypr:
-    description: "Hyprland configs"
-    files:
-      - source: "hypr"
-        target: "~/.config/hypr/"
-
   voxtype:
     description: "Voice to text"
     files:
