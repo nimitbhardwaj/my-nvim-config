@@ -1,6 +1,6 @@
 -- Floating-terminal wrapper around CLI coding agents ("harnesses").
 --
--- One harness is active at a time; `:SetAIHarness claude` switches, and the
+-- One harness is active at a time; `:SetAIHarness omp|claude` switches, and the
 -- choice is remembered per project directory across nvim restarts
 -- (`:SetAIHarness reset` forgets it). The keymaps (<C-.> to toggle, <leader>o+
 -- to send a file reference) always act on whichever harness is active. Each
@@ -16,6 +16,20 @@ local terminal = require("tools.terminal")
 --   srow, scol        -- selection start (1-based; nil outside visual mode)
 --   erow, ecol        -- selection end
 local harnesses = {
+  omp = {
+    cmd = "omp",
+    ref = function(path, srow, scol, erow, ecol, linewise)
+      if not srow then
+        return "@" .. path
+      end
+      -- Oh My Pi keeps pi's mention syntax: @path:Lstart-Lend, with columns
+      -- when the selection is characterwise.
+      if linewise then
+        return string.format("@%s:L%d-L%d", path, srow, erow)
+      end
+      return string.format("@%s:L%dC%d-L%dC%d", path, srow, scol, erow, ecol)
+    end,
+  },
   claude = {
     cmd = "claude",
     ref = function(path, srow, _, erow, _, _)
@@ -31,7 +45,7 @@ local harnesses = {
   },
 }
 
-local DEFAULT_HARNESS = "claude"
+local DEFAULT_HARNESS = "omp"
 
 -- The choice is remembered per project directory, keyed by the cwd nvim was
 -- started in, in a small JSON map under nvim's state dir. Two nvim instances in
@@ -289,7 +303,7 @@ vim.api.nvim_create_user_command("SetAIHarness", function(opts)
   M.set(opts.args)
 end, {
   nargs = "?",
-  desc = "Set the AI agent harness used by <C-.> for this directory (claude|reset)",
+  desc = "Set the AI agent harness used by <C-.> for this directory (omp|claude|reset)",
   complete = function(lead)
     local candidates = vim.tbl_keys(harnesses)
     table.insert(candidates, "reset")
