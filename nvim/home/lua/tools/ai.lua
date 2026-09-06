@@ -1,6 +1,6 @@
 -- Floating-terminal wrapper around CLI coding agents ("harnesses").
 --
--- One harness is active at a time; `:SetAIHarness pi|claude` switches, and the
+-- One harness is active at a time; `:SetAIHarness claude` switches, and the
 -- choice is remembered per project directory across nvim restarts
 -- (`:SetAIHarness reset` forgets it). The keymaps (<C-.> to toggle, <leader>o+
 -- to send a file reference) always act on whichever harness is active. Each
@@ -15,36 +15,9 @@ local terminal = require("tools.terminal")
 --   path              -- absolute/relative file path
 --   srow, scol        -- selection start (1-based; nil outside visual mode)
 --   erow, ecol        -- selection end
--- `dismiss_completion` sends <Esc> shortly after typing, for agents whose
--- @-mention popup stays open after the trailing space.
--- `inline` marks an agent that prints into the normal scrollback (a plain CLI)
--- rather than driving a full-screen TUI. Only inline agents get nvim-side
--- scroll handling; a TUI owns the screen and its own scrollback, so any
--- remapping here just fights it.
 local harnesses = {
-  pi = {
-    cmd = "pi",
-    inline = true,
-    dismiss_completion = true,
-    ref = function(path, srow, scol, erow, ecol, linewise)
-      if not srow then
-        return "@" .. path
-      end
-      if linewise then
-        return string.format("@%s:L%d-L%d", path, srow, erow)
-      end
-      return string.format("@%s:L%dC%d-L%dC%d", path, srow, scol, erow, ecol)
-    end,
-  },
   claude = {
     cmd = "claude",
-    -- Claude is a full-screen TUI (alt-screen, and it takes over the mouse in
-    -- its alt-screen views), so it handles scrolling itself — leave the
-    -- terminal's default behaviour alone.
-    inline = false,
-    -- Claude closes its @-mention popup on the trailing space, and <Esc> there
-    -- would clear the prompt instead.
-    dismiss_completion = false,
     ref = function(path, srow, _, erow, _, _)
       if not srow then
         return "@" .. path
@@ -58,7 +31,7 @@ local harnesses = {
   },
 }
 
-local DEFAULT_HARNESS = "pi"
+local DEFAULT_HARNESS = "claude"
 
 -- The choice is remembered per project directory, keyed by the cwd nvim was
 -- started in, in a small JSON map under nvim's state dir. Two nvim instances in
@@ -120,25 +93,6 @@ end
 -- true while the window is merely hidden.
 local sessions = {}
 
--- Scroll/mouse handling for inline CLI agents only. While they stream, the
--- terminal "follows" new output as long as the cursor is on the last line —
--- scrolling the view up alone gets yanked back down. So on scroll-up, drop
--- into terminal-normal mode and park the cursor mid-window (M), which moves it
--- off the last line and stops the follow. Then scroll up normally.
-local function map_inline_scrolling(bufnr)
-  local map_opts = { buffer = bufnr, nowait = true }
-  vim.keymap.set("t", "<ScrollWheelUp>", [[<C-\><C-n>M<ScrollWheelUp>]], map_opts)
-  -- Vertical scroll only: disable horizontal (left/right) scrolling.
-  for _, key in ipairs({ "<ScrollWheelLeft>", "<ScrollWheelRight>" }) do
-    vim.keymap.set({ "t", "n" }, key, "<Nop>", map_opts)
-  end
-  -- Clicking while typing should stay in terminal mode (don't drop to normal
-  -- mode). When scrolled up, a click just positions the cursor and keeps the
-  -- scrolled view — it never yanks you back down. Press i to resume typing.
-  vim.keymap.set("t", "<LeftMouse>", "<Nop>", map_opts)
-  vim.keymap.set("t", "<LeftRelease>", "<Nop>", map_opts)
-end
-
 local function create_session(name)
   local harness = harnesses[name]
   local session = { running = false }
@@ -150,17 +104,10 @@ local function create_session(name)
       border = "rounded",
     },
     hidden = true,
-    -- For inline agents, don't force the view to the bottom on every line they
-    -- print, so scrolling up to read while they work actually sticks. A TUI
-    -- redraws its own frame, so it keeps toggleterm's default.
-    auto_scroll = not harness.inline,
     on_open = function(self)
       terminal.register(self)
       session.running = true
       vim.cmd("startinsert!")
-      if harness.inline then
-        map_inline_scrolling(self.bufnr)
-      end
     end,
     on_exit = function(self)
       terminal.unregister(self)
@@ -271,16 +218,10 @@ local function type_into_agent(session, text)
   return true
 end
 
--- Type the reference followed by a space, then (for agents that need it)
--- press <Esc> to dismiss the @-mention completion popup while keeping the
--- typed path.
+-- Type the reference followed by a space. Claude closes its @-mention popup on
+-- that trailing space, so nothing else is needed to dismiss it.
 local function deliver(session, ref)
   type_into_agent(session, ref .. " ")
-  if harnesses[active].dismiss_completion then
-    vim.defer_fn(function()
-      type_into_agent(session, "\27") -- <Esc>
-    end, 100)
-  end
 end
 
 function M.send_reference()
@@ -348,7 +289,7 @@ vim.api.nvim_create_user_command("SetAIHarness", function(opts)
   M.set(opts.args)
 end, {
   nargs = "?",
-  desc = "Set the AI agent harness used by <C-.> for this directory (pi|claude|reset)",
+  desc = "Set the AI agent harness used by <C-.> for this directory (claude|reset)",
   complete = function(lead)
     local candidates = vim.tbl_keys(harnesses)
     table.insert(candidates, "reset")

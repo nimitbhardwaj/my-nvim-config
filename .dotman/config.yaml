@@ -28,10 +28,6 @@ packages:
     files:
       - source: "nvim/home"
         target: "~/.config/nvim"
-    doctor:
-      executables:
-        - name: pi
-          severity: warning
   cliamp:
     description: "CLI Radio"
     files:
@@ -45,26 +41,6 @@ packages:
     doctor:
       executables:
         - name: cliamp
-          severity: error
-  pi:
-    description: "Pi agent assistant configuration"
-    files:
-      - source: "pi"
-        target: "~/.pi"
-        absorb_ignore:
-          - "agent/intercom"
-          - "agent/agents"
-          - "agent/compound-engineering"
-          - "agent/git"
-          - "agent/npm"
-          - "agent/sessions"
-          - "agent/skills"
-          - "agent/auth.json"
-          - "agent/trust.json"
-
-    doctor:
-      executables:
-        - name: pi
           severity: error
   hypr:
     description: "Hyprland configs"

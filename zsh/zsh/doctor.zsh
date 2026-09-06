@@ -145,13 +145,6 @@ zsh_doctor() {
   print "🔧 DEVELOPMENT TOOLS"
   print "───────────────────────────────────────────────"
 
-  if command -v pi >/dev/null 2>&1; then
-    print "✓ Pi"
-  else
-    print "⚠ Pi not found"
-    ((warnings++))
-  fi
-
   if command -v ralph-tui >/dev/null 2>&1; then
     print "✓ Ralph TUI"
   else
