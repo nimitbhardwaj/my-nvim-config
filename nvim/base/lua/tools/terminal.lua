@@ -30,16 +30,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufLeave" }, {
 -- button arrives as <LeftDrag>, a fast second click as <2-LeftMouse> and then
 -- <2-LeftDrag>/<2-LeftRelease>, and anything we leave unmapped falls through
 -- to nvim, which is exactly what drops us back into normal mode.
+-- The wheel is deliberately absent: left unmapped, nvim already does the right
+-- thing in both of the TUI's modes. With tracking on (omp's fullscreen pickers)
+-- it forwards the wheel to the app; with tracking off (the inline transcript)
+-- the scrollback *is* this terminal buffer, so nvim scrolls it — which it can
+-- only do outside terminal mode. Mapping the wheel to a forward instead left
+-- inline scrolling dead, since omp drops wheel reports it never asked for.
 local mouse_reports = {}
 for modifier, mod_code in pairs({ [""] = 0, ["S-"] = 4, ["M-"] = 8, ["C-"] = 16 }) do
-  for wheel, code in pairs({
-    ScrollWheelUp = 64,
-    ScrollWheelDown = 65,
-    ScrollWheelLeft = 66,
-    ScrollWheelRight = 67,
-  }) do
-    mouse_reports["<" .. modifier .. wheel .. ">"] = { code + mod_code, "M" }
-  end
   mouse_reports["<" .. modifier .. "MouseMove>"] = { 35 + mod_code, "M" }
 
   for button, code in pairs({ Left = 0, Middle = 1, Right = 2, X1 = 128, X2 = 129 }) do
@@ -65,10 +63,16 @@ local function own_mouse(term)
     vim.keymap.set("t", key, function()
       local pos = vim.fn.getmousepos()
       if term.job_id and pos.winid == term.window then
-        vim.api.nvim_chan_send(
-          term.job_id,
-          string.format("\27[<%d;%d;%d%s", report[1], pos.wincol, pos.winrow, report[2])
-        )
+        -- getmousepos() counts the border: on a bordered float winrow/wincol 1
+        -- is the border itself and the first text cell is 2. Report that as-is
+        -- and the TUI sees the pointer one cell down-right of where it is —
+        -- which is why a drag selected the line below the pointer.
+        local off = type(vim.api.nvim_win_get_config(pos.winid).border) == "table" and 1 or 0
+        local row, col = pos.winrow - off, pos.wincol - off
+        if row < 1 or col < 1 then
+          return -- on the border, not in the TUI
+        end
+        vim.api.nvim_chan_send(term.job_id, string.format("\27[<%d;%d;%d%s", report[1], col, row, report[2]))
       end
     end, { buffer = term.bufnr, desc = "forward mouse to the TUI" })
   end
